@@ -26,11 +26,7 @@
                     </span>
                         </h2>
                         <div class="content-container result-graph_container">
-                            <object class="result-graph" type="image/svg+xml" data="#{resource['img/result-graph.svg']}">
-                                <img src="#{resource['img/result-graph.png']}" width="220" height="220" alt="График"/>
-                            </object>
-                            <canvas class="graph-canvas graph-canvas_points" width="220" height="220">Предыдущие проверки</canvas>
-                            <canvas class="graph-canvas graph-canvas_current" width="220" height="220">Интерактивная область графика</canvas>
+                            <canvas class="graph-canvas graph-canvas_current" id="graph" width="300" height="300">Интерактивная область графика</canvas>
                         </div>
                     </section>
                     <section class="main-container__item_left-column__item content-section content-section_values">
@@ -43,7 +39,15 @@
                             <p class="input-form__info">Введите координаты точки</p>
 
                             <div class="input-form__container input-form__container_select">
-
+                                <h:commandLink value="-5" action="#{bean.setX(-5)}"/>
+                                <h:commandLink value="-4" action="#{bean.setX(-4)}"/>
+                                <h:commandLink value="-3" action="#{bean.setX(-3)}"/>
+                                <h:commandLink value="-2" action="#{bean.setX(-2)}"/>
+                                <h:commandLink value="-1" action="#{bean.setX(-1)}"/>
+                                <h:commandLink value="0" action="#{bean.setX(0)}"/>
+                                <h:commandLink value="1" action="#{bean.setX(1)}"/>
+                                <h:commandLink value="2" action="#{bean.setX(2)}"/>
+                                <h:commandLink value="3" action="#{bean.setX(3)}"/>
                             </div>
                             <div class="input-form__container input-form__container_text">
                                 <h:outputLabel styleClass="input-form__label input-form__label_y" for="y-text" value="Y"/>
@@ -59,6 +63,8 @@
                 </div>
             </main>
         <pf:remoteCommand name="addPoint" actionListener="#{entriesBean.addEntryWithParameters}" update="results"/>
+        <h:outputScript library="js" name="main.js"/>
+        <h:outputScript library="js" name="graph.js"/>
         </ui:define>
 
     </ui:composition>
