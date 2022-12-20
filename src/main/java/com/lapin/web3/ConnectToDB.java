@@ -43,13 +43,12 @@ public class ConnectToDB implements Serializable {
 
     public void insertIntoTable(Entry entry) {
         try {
-            String insertSql = "INSERT INTO entities (id, x, y, r, hitResult) VALUES (?, ?, ?, ?, ?)";
+            String insertSql = "INSERT INTO entities (x, y, r, hitResult) VALUES (?, ?, ?, ?)";
             PreparedStatement insertStmt = connection.prepareStatement(insertSql);
-            insertStmt.setDouble(1, entry.getId());
-            insertStmt.setDouble(2, entry.getX());
-            insertStmt.setDouble(3, entry.getY());
-            insertStmt.setDouble(4, entry.getR());
-            insertStmt.setString(5, entry.getHitResult());
+            insertStmt.setDouble(1, entry.getX());
+            insertStmt.setDouble(2, entry.getY());
+            insertStmt.setDouble(3, entry.getR());
+            insertStmt.setString(4, entry.getHitResult());
             insertStmt.executeUpdate();
         } catch (SQLException e) {
             logger.error(e.getMessage());
