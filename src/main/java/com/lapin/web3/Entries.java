@@ -1,5 +1,6 @@
 package com.lapin.web3;
 
+import com.lapin.web3.db.DBHandler;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,14 +15,13 @@ public class Entries implements Serializable {
 
     private Entry entry;
     private List<Entry> entries;
-    private ConnectToDB db;
+    private DBHandler db;
 
     public Entries(){
         entry = new Entry();
         entries = new ArrayList<>();
 
-        db = new ConnectToDB();
-        db.init();
+        db = new DBHandler();
         entries = db.selectAllFromTable();
     }
     public void addEntry(){
