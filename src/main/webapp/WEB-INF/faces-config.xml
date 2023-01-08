@@ -28,5 +28,16 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    
+    <managed-bean>
+        <managed-bean-name>entry</managed-bean-name>
+        <managed-bean-class>com.lapin.web3.Entry</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>entries</managed-bean-name>
+        <managed-bean-class>com.lapin.web3.Entries</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
 </faces-config>

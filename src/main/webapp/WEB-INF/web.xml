@@ -22,15 +22,4 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
-<!--    resource reference tells the application server (in this case, WildFly)-->
-<!--    that you want to inject a JDBC data source into your application,-->
-<!--    and that the data source should be looked up using the JNDI name "jdbc/lab3"-->
-    <resource-ref>
-        <description>JDBC data source for the "lab3" database, which manages a table named "entities"
-            containing beans named "Entry" with fields "double x, double y, double r, String hitResult"
-            and primary key named id.</description>
-        <res-ref-name>jdbc/lab3</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-    </resource-ref>
 </web-app>

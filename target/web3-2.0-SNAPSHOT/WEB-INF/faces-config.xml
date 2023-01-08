@@ -3,30 +3,41 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
               version="2.2">
-    <!-- Navigation rule for navigating from index.xhtml to main.xhtml -->
+    <!-- Navigation rule for navigating from index.xhtml to home.xhtml -->
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>goToMain</from-outcome>
-            <to-view-id>/main.xhtml</to-view-id>
+            <to-view-id>/home.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
 
-    <!-- Navigation rule for navigating between main.xhtml and index.xhtml -->
+    <!-- Navigation rule for navigating between home.xhtml and index.xhtml -->
     <navigation-rule>
-        <from-view-id>/main.xhtml</from-view-id>
+        <from-view-id>/home.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>goToIndex</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        <!-- Navigation case for redirecting back to main.xhtml -->
+        <!-- Navigation case for redirecting back to home.xhtml -->
         <navigation-case>
             <from-outcome>redirect</from-outcome>
-            <to-view-id>/main.xhtml</to-view-id>
+            <to-view-id>/home.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    
+    <managed-bean>
+        <managed-bean-name>entry</managed-bean-name>
+        <managed-bean-class>com.lapin.web3.Entry</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>entries</managed-bean-name>
+        <managed-bean-class>com.lapin.web3.Entries</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
 </faces-config>
