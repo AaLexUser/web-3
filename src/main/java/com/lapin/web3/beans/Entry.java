@@ -1,5 +1,6 @@
-package com.lapin.web3;
+package com.lapin.web3.beans;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,8 @@ import java.io.Serializable;
 @Setter
 @Getter
 @NoArgsConstructor
-@ManagedBean
+@AllArgsConstructor
+@ManagedBean("entry")
 public class Entry implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
@@ -19,28 +21,10 @@ public class Entry implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-    //private long id; // The primary key of the entity
     private Double x;
     private Double y;
     private Double r;
     private String hitResult;
-
-    private boolean checkTriangle() {
-        return x >=0 && y >=0 && (y + x <=(double) r);
-    }
-
-    private boolean checkRectangle() {
-        return x >= 0 && y <= 0 && Math.abs(x) <= r/2 && Math.abs(y) <= (double) r;
-    }
-
-    private boolean checkCircle() {
-        return x <= 0 && y >= 0 && x * x + y * y <= (double) r * r /4;
-    }
-
-    public String checkHit() {
-        hitResult = checkTriangle() || checkRectangle() || checkCircle() ? "Попадание" : "Промах";
-        return hitResult;
-    }
 
     @Override
     public String toString() {

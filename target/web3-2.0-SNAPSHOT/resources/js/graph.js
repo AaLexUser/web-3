@@ -79,8 +79,8 @@ export class Graph {
         this.ctx.fill();
     }
     getMousePosition(e) {
-        let mouseX = e.offsetX * canvas.width / canvas.clientWidth | 0;
-        let mouseY = e.offsetY * canvas.height / canvas.clientHeight | 0;
+        let mouseX = e.offsetX * this.canvas.width / this.canvas.clientWidth | 0;
+        let mouseY = e.offsetY * this.canvas.height / this.canvas.clientHeight | 0;
         return {x: mouseX, y: mouseY};
     }
 }

@@ -1,9 +1,14 @@
 package com.lapin.web3.db;
 
 
-import com.lapin.web3.Entry;
+import com.lapin.web3.beans.Entry;
+import lombok.NoArgsConstructor;
 import org.apache.log4j.Logger;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,17 +18,17 @@ import java.util.List;
 
 public class DBHandler {
     private static final Logger logger = Logger.getLogger(DBHandler.class);
-    private DBConnector connector;
+    private final Connection connection;
 
-    public DBHandler(){
-        connector = new DBConnector();
+    public DBHandler() {
+        connection = DBConnector.connect();
+        createTable();
     }
     /**
      * Creates the "entities" table if it doesn't exist.
      */
     public void createTable(){
-        try (Connection connection = connector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DBQuery.CREATE_ENTRIES_TABLE.getQuery())) {
+        try (PreparedStatement statement = connection.prepareStatement(DBQuery.CREATE_ENTRIES_TABLE.getQuery())) {
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -35,13 +40,12 @@ public class DBHandler {
      * @param entry the entry to insert
      */
     public void insertIntoTable(Entry entry) {
-        try (Connection connection = connector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DBQuery.INSERT_ENTRY.getQuery())) {
+        try (PreparedStatement statement = connection.prepareStatement(DBQuery.INSERT_ENTRY.getQuery())) {
             statement.setDouble(1, entry.getX());
             statement.setDouble(2, entry.getY());
             statement.setDouble(3, entry.getR());
             statement.setString(4, entry.getHitResult());
-            statement.executeUpdate();
+            statement.execute();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -53,8 +57,7 @@ public class DBHandler {
      */
     public List<Entry> selectAllFromTable() {
         List<Entry> entries = new ArrayList<>();
-        try (Connection connection = connector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DBQuery.SELECT_ALL_ENTRIES.getQuery())) {
+        try (PreparedStatement statement = connection.prepareStatement(DBQuery.SELECT_ALL_ENTRIES.getQuery())) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Entry entry = new Entry();
@@ -69,6 +72,16 @@ public class DBHandler {
             logger.error(e.getMessage());
         }
         return entries;
+    }
+    /**
+     * Deletes all entries from the "entities" table.
+     */
+    public void deleteAllFromTable() {
+        try (PreparedStatement statement = connection.prepareStatement(DBQuery.DELETE_ALL_ENTRIES.getQuery())) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
     }
 }
 

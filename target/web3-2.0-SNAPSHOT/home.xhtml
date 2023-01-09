@@ -5,7 +5,7 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pf="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui">
 
     <!-- This file uses a template to define the layout of the page -->
     <ui:composition template="WEB-INF/templates/template.xhtml">
@@ -15,107 +15,113 @@
             <title>Лабораторная работа #3 - Основная страница</title>
             <script src="resources/js/home.js" type="module"></script>
             <script src="resources/js/graph.js" type="module"></script>
+            <h:outputStylesheet  name="css/home.css"/>
         </ui:define>
         <!-- This defines the main content of the page -->
         <ui:define name="main">
             <main class="main-container">
                 <h1 class="visually-hidden">Лабораторная работа #3 - Основная страница</h1>
+                <div class="card">
+                    <h:form>
+                        <p:breadCrumb>
+                            <p:menuitem value="Start Page" outcome="goToIndex"/>
+                            <p:menuitem value="Main Page"/>
+                        </p:breadCrumb>
+                    </h:form>
+                </div>
                 <div class="main-container__item main-container__item_left-column">
-                    <section class="main-container__item_left-column__item content-section content-section_graph">
-                        <h2 class="content-section__header content-section__header_graph topper">
-                    <span class="content-section__header__text">
-                        График
-                    </span>
-                        </h2>
-                        <div class="content-container result-graph_container">
-                            <canvas class="graph-canvas graph-canvas_current" id="graph" width="300" height="300">Интерактивная область графика</canvas>
-                        </div>
-                    </section>
-                    <section class="main-container__item_left-column__item content-section content-section_values">
-                        <h2 class="content-section__header content-section__header_values topper">
-                            <span class="content-section__header__text">
-                                Данные
-                            </span>
-                        </h2>
-                        <h:form class="input-form">
-                            <p class="input-form__info">Введите координаты точки</p>
-                            <div>
-                                <h:outputLabel value="X"  class="input-form__label" />
-                                <h:commandLink value="-5 " action="#{entry.setX(-5)}" />
-                                <h:commandLink value="-4 " action="#{entry.setX(-4)}" />
-                                <h:commandLink value="-3 " action="#{entry.setX(-3)}" />
-                                <h:commandLink value="-2 " action="#{entry.setX(-2)}" />
-                                <h:commandLink value="-1 " action="#{entry.setX(-1)}" />
-                                <h:commandLink value="0 " action="#{entry.setX(0)}" />
-                                <h:commandLink value="1 " action="#{entry.setX(1)}" />
-                                <h:commandLink value="2 " action="#{entry.setX(2)}" />
-                                <h:commandLink value="3 " action="#{entry.setX(3)}" />
-                            </div>
-                            <div class="input-form__container">
-                                <h:outputLabel styleClass="input-form__label input-form__label_x" value="Y"/>
-                                <h:inputText styleClass="input-form__control input-form__text input-form__text_y" id="y-text"
-                                             maxlength="5" autocomplete="off" a:placeholder="Число от -3 до 3"
-                                             value="#{entry.y}">
-                                    <f:validateRequired/>
-                                    <f:validateDoubleRange minimum="-3" maximum="3"/>
-                                </h:inputText>
-                            </div>
-                            <h:outputLabel styleClass="input-form__label input-form__label_r" value="R"/>
-                            <div class="input-form__container input-form__container_buttons">
-                                <h:outputLabel value="1">
-                                <h:selectBooleanCheckbox styleClass="input-form__control"  action="#{entry.setR(1)}"/>
-                                </h:outputLabel>
-                                <h:outputLabel value="1.5">
-                                    <h:selectBooleanCheckbox styleClass="input-form__control" action="#{entry.setR(1.5)}"/>
-                                </h:outputLabel>
-                                <h:outputLabel value="2">
-                                    <h:selectBooleanCheckbox styleClass="input-form__control" action="#{entry.setR(2)}"/>
-                                </h:outputLabel>
-                                <h:outputLabel value="2.5">
-                                    <h:selectBooleanCheckbox styleClass="input-form__control" action="#{entry.setR(2.5)}"/>
-                                </h:outputLabel>
-                                <h:outputLabel value="3">
-                                    <h:selectBooleanCheckbox styleClass="input-form__control" action="#{entry.setR(3)}"/>
-                                </h:outputLabel>
-                            </div>
-                            <div>
-                                <h:commandButton styleClass="input-form__control-buttons__button input-form__control-buttons__button_submit"
-                                                 value="Отправить"/>
-                                <h:commandButton styleClass="input-form__control-buttons__button input-form__control-buttons__button_reset"
-                                                 value="Очистить" immediate="true"/>
-                            </div>
-                        </h:form>
-                    </section>
-                    <section>
-                        <h2 class="content-section__header content-section__header_table topper">
-                            <span class="content-section__header__text">
-                                Таблица
-                            </span>
-                        </h2>
-                        <div class="result-table_container">
-                            <h:dataTable styleClass="result-table" value="#{entries.entries}" var="entry">
-                                <h:column headerClass="result-table__column result-table__column_coords">
-                                    <f:facet name="header">X</f:facet>
-                                    <h:outputText value="#{entry.x}"/>
-                                </h:column>
-                                <h:column headerClass="result-table__column result-table__column_coords">
-                                    <f:facet name="header">Y</f:facet>
-                                    <h:outputText value="#{entry.y}"/>
-                                </h:column>
-                                <h:column headerClass="result-table__column result-table__column_coords">
-                                    <f:facet name="header">R</f:facet>
-                                    <h:outputText value="#{entry.r}"/>
-                                </h:column>
-                                <h:column headerClass="result-table__column result-table__column_hitres">
-                                    <f:facet name="header">Результат</f:facet>
-                                    <h:outputText value="#{entry.hitResult}"/>
-                                </h:column>
-                            </h:dataTable>
-                        </div>
-                    </section>
+                    <p:splitter>
+                        <p:splitterPanel styleClass="flex align-items-center justify-content-center">
+                            <p:panel>
+                                <section>
+                                    <h2><span>График</span></h2>
+                                    <div class="content-container result-graph_container">
+                                        <canvas class="graph-canvas graph-canvas_current" id="graph" width="300" height="300">Интерактивная область графика</canvas>
+                                    </div>
+                                </section>
+                            </p:panel>
+                        </p:splitterPanel>
+                        <p:splitterPanel styleClass="flex align-items-center justify-content-center">
+                            <section>
+                                <h2><span>Данные</span></h2>
+                                <h:form class="input-form" id="form">
+                                    <p:panel styleClass="panel">
+                                        <label class="panel__title">Координата X</label>
+                                        <table>
+                                            <tr>
+                                                <td><p:commandLink value="-5" onclick="selectedX(-5)"/></td>
+                                                <td><p:commandLink value="-4" onclick="selectedX(-4)"/></td>
+                                                <td><p:commandLink value="-3" onclick="selectedX(-3)"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p:commandLink value="-2" onclick="selectedX(-2)"/></td>
+                                                <td><p:commandLink value="-1" onclick="selectedX(-1)"/></td>
+                                                <td><p:commandLink value="0" onclick="selectedX(0)"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p:commandLink value="1" onclick="selectedX(1)"/></td>
+                                                <td><p:commandLink value="2" onclick="selectedX(2)"/></td>
+                                                <td><p:commandLink value="3" onclick="selectedX(3)"/></td>
+                                            </tr>
+                                            <h:inputHidden id="x-hidden" value="#{form.x}"/>
+                                            <p:outputLabel id="x-label" value="Selected value: " />
+                                        </table>
+                                    </p:panel>
+                                    <p:panel styleClass="panel">
+                                    <label class="panel__title">Координата Y</label>
+                                        <p:inputText
+                                                placeholder="(-3; 3)"
+                                                value="#{form.y}"
+                                                maxlength="5"
+                                                id="y"
+                                                required="true">
+                                            <f:validateRequired/>
+                                            <f:validateDoubleRange minimum="-3" maximum="3"/>
+                                        </p:inputText>
+                                    </p:panel>
+
+                                    <p:panel styleClass="panel flex-column-inner">
+                                        <label class="panel__title">Радиус R</label>
+                                        <p:selectBooleanCheckbox itemLabel="1" onchange="this.checked ? selectedR(1) : deselectedR(1)"/>
+                                        <p:selectBooleanCheckbox itemLabel="1.5" onchange="this.checked ? selectedR(1.5) : deselectedR(1.5)"/>
+                                        <p:selectBooleanCheckbox itemLabel="2" onchange="this.checked ? selectedR(2) : deselectedR(2)"/>
+                                        <p:selectBooleanCheckbox itemLabel="2.5" onchange="this.checked ? selectedR(2.5) : deselectedR(2.5)"/>
+                                        <p:selectBooleanCheckbox itemLabel="3" onchange="this.checked ? selectedR(3) : deselectedR(3)"/>
+                                        <h:inputHidden id="r-hidden" value="#{form.r}"/>
+                                    </p:panel>
+                                    <p:toolbar>
+                                        <p:toolbarGroup>
+                                            <h:commandButton id = "submit-btn" styleClass="button"
+                                                             value="Submit" action="#{form.submit}"/>
+                                            <h:commandButton styleClass="button reset" action="#{form.clear}"
+                                                             value="Reset" immediate="true"/>
+                                        </p:toolbarGroup>
+                                    </p:toolbar>
+                                </h:form>
+                            </section>
+                        </p:splitterPanel>
+                    </p:splitter>
+                    <p:panel>
+                        <h2><span>Таблица</span></h2>
+                        <p:dataTable id="result_table" styleClass="result-table" value="#{entries.getEntries()}"
+                                     var="entry" scrollable="true" scrollHeight="250">
+                            <p:column headerText="X">
+                                <h:outputText styleClass="x" value="#{entry.x}"/>
+                            </p:column>
+                            <p:column headerText="Y">
+                                <f:facet name="header">Y</f:facet>
+                                <h:outputText styleClass="y" value="#{entry.y}"/>
+                            </p:column>
+                            <p:column headerText="R">
+                                <h:outputText styleClass="r" value="#{entry.r}"/>
+                            </p:column>
+                            <p:column headerText="hitResult">
+                                <h:outputText styleClass="hit" value="#{entry.hitResult}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
                 </div>
             </main>
-<!--        <pf:remoteCommand name="addPoint" actionListener="#{entriesBean.addEntryWithParameters}" update="results"/>-->
         </ui:define>
 
     </ui:composition>

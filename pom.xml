@@ -51,6 +51,13 @@
             <artifactId>primefaces</artifactId>
             <version>12.0.0</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>primeicons</artifactId>
+            <version>6.0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
