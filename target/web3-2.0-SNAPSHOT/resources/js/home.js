@@ -1,9 +1,9 @@
 import {Graph} from "./graph.js";
 let graph = new Graph(document.getElementById("graph"));
 let table = [];
-let xHidden = document.getElementById("form:x-hidden");
+let xHidden = document.getElementById("form:x");
 let yInput = document.getElementById("form:y");
-let rHidden = document.getElementById("form:r-hidden");
+let rHidden = document.getElementById("form:r");
 let submitButton = document.getElementById("form:submit-btn");
 let xLabel = document.getElementById("form:x-label");
 const xLim = {min:-5,max: 3};
@@ -67,6 +67,11 @@ function  redrawGraph(){
             graph.drawPoint(table[i][0], table[i][1], table[i][2], table[i][3]);
         }
     }
+}
+function onComplite() {
+    xLabel.innerText = "Selected value: 123";
+    xHidden.value = "";
+    rHidden.value = "";
 }
 
 $(document).ready(function() {

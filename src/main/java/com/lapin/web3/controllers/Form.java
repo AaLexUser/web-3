@@ -5,9 +5,11 @@ import com.lapin.web3.beans.Entry;
 import com.lapin.web3.utility.Checker;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.model.SortMeta;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,23 +18,21 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @SessionScoped
 @Setter
 @Getter
 public class Form implements Serializable {
-    @NotNull(message = "X is empty")
     private Double x;
-    @NotNull(message = "Y is empty")
-    @Min(value=-3, message = "Y must be greater than -3")
-    @Max(value = 3, message = "Y must be lower than 5")
     private Double y;
-    @NotNull(message = "R is empty")
     private Double r;
     private String hitResult;
     @Inject
     private Entries entries;
+    private List<SortMeta> sortBy;
+
 
 
     public void submit() throws IOException {
@@ -42,6 +42,9 @@ public class Form implements Serializable {
         entry.setR(r);
         entry.setHitResult(new Checker(x, y, r).checkHit());
         entries.addEntry(entry);
+        x = null;
+        y = null;
+        r = null;
         FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
     }
 
@@ -52,6 +55,14 @@ public class Form implements Serializable {
     public void clear() throws IOException {
         entries.clearEntries();
         FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+    }
+
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+    public void showInfo(String summary, String detail) {
+        addMessage(FacesMessage.SEVERITY_INFO, summary, detail);
     }
 
     @Override
