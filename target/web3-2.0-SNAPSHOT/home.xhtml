@@ -37,7 +37,7 @@
                                     <canvas class="graph-canvas graph-canvas_current" id="graph" width="300" height="300">Интерактивная область графика</canvas>
                             </section>
                         </p:card>
-                        <p:card>
+                        <p:card style="display: flex">
                             <h2><span>Таблица</span></h2>
                             <p:dataTable id="result_table"
                                          styleClass="result-table"
@@ -47,19 +47,18 @@
                                          scrollHeight="500px"
                                          showGridlines="true"
                                          resizableColumns="true"
-                                         allowUnsorting="true"
-                                         sortMode="single"
+
                                          >
-                                <p:column headerText="X" sortBy="#{entry.x}">
+                                <p:column headerText="X">
                                     <h:outputText styleClass="x" value="#{entry.x}"/>
                                 </p:column>
-                                <p:column headerText="Y" sortBy="#{entry.y}">
+                                <p:column headerText="Y">
                                     <h:outputText styleClass="y" value="#{entry.y}"/>
                                 </p:column>
-                                <p:column headerText="R" sortBy="#{entry.r}">
+                                <p:column headerText="R" >
                                     <h:outputText styleClass="r" value="#{entry.r}"/>
                                 </p:column>
-                                <p:column headerText="hitResult" sortBy="#{entry.hitResult}" sortOrder="asc">
+                                <p:column headerText="hitResult">
                                     <h:outputText styleClass="hit" value="#{entry.hitResult}"/>
                                 </p:column>
                             </p:dataTable>
@@ -112,19 +111,21 @@
                                     </p:panelGrid>
                                 </p:panel>
 
-                                <p:panel styleClass="panel flex-column-inner">
+                                <p:panel styleClass="panel flex-column-inner r__panel">
                                     <p:panelGrid columns="3" style="width:100%; height: 100%">
                                         <f:facet name="header">
                                             <label class="panel__title">Радиус R</label>
                                         </f:facet>
-                                        <p:selectBooleanCheckbox itemLabel="1" onchange="this.checked ? selectedR(1) : deselectedR(1)"/>
-                                        <p:selectBooleanCheckbox itemLabel="1.5" onchange="this.checked ? selectedR(1.5) : deselectedR(1.5)"/>
-                                        <p:selectBooleanCheckbox itemLabel="2" onchange="this.checked ? selectedR(2) : deselectedR(2)"/>
-                                        <p:selectBooleanCheckbox itemLabel="2.5" onchange="this.checked ? selectedR(2.5) : deselectedR(2.5)"/>
-                                        <p:selectBooleanCheckbox itemLabel="3" onchange="this.checked ? selectedR(3) : deselectedR(3)"/>
-                                        <h:inputHidden id="r" value="#{form.r}">
-                                            <f:validateRequired/>
-                                        </h:inputHidden>
+                                        <p:selectBooleanCheckbox itemLabel="1" value="#{form.r[0]}" styleClass="r"
+                                                                 onchange="this.checked ? selectedR(1) : deselectedR(1)"/>
+                                        <p:selectBooleanCheckbox itemLabel="1.5" value="#{form.r[1]}" styleClass="r"
+                                                                 onchange="this.checked ? selectedR(1.5) : deselectedR(1.5)"/>
+                                        <p:selectBooleanCheckbox itemLabel="2" value="#{form.r[2]}" styleClass="r"
+                                                                 onchange="this.checked ? selectedR(2) : deselectedR(2)"/>
+                                        <p:selectBooleanCheckbox itemLabel="2.5" value="#{form.r[3]}" styleClass="r"
+                                                                 onchange="this.checked ? selectedR(2.5) : deselectedR(2.5)"/>
+                                        <p:selectBooleanCheckbox itemLabel="3" value="#{form.r[4]}" styleClass="r"
+                                                                 onchange="this.checked ? selectedR(3) : deselectedR(3)"/>
                                     </p:panelGrid>
                                 </p:panel>
                                 <p:toolbar>

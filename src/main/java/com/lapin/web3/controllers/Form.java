@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.primefaces.model.SortMeta;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -27,24 +28,33 @@ import java.util.List;
 public class Form implements Serializable {
     private Double x;
     private Double y;
-    private Double r;
+    private Boolean[] r;
+    private Double[] rValues;
     private String hitResult;
     @Inject
     private Entries entries;
-    private List<SortMeta> sortBy;
+
+    @PostConstruct
+    public void init(){
+        r = new Boolean[5];
+        rValues = new Double[]{1.0, 1.5, 2.0, 2.5, 3.0};
+    }
 
 
 
     public void submit() throws IOException {
-        Entry entry = new Entry();
-        entry.setX(x);
-        entry.setY(y);
-        entry.setR(r);
-        entry.setHitResult(new Checker(x, y, r).checkHit());
-        entries.addEntry(entry);
+        for (int i = 0; i < r.length; i++) {
+            if (r[i] != null && r[i]) {
+                Entry entry = new Entry();
+                entry.setX(x);
+                entry.setY(y);
+                entry.setR(rValues[i]);
+                entry.setHitResult(new Checker(x, y, rValues[i]).checkHit());
+                entries.addEntry(entry);
+            }
+        }
         x = null;
         y = null;
-        r = null;
         FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
     }
 
